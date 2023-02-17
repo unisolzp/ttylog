@@ -1,0 +1,4 @@
+#!/bin/bash
+
+TTY_ID=$(cat /mnt/sessions/HOSTNAME/sessions/$1)
+ttylog pts/$TTY_ID

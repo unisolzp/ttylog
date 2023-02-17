@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ttyplay /mnt/sessions/HOSTNAME/records/$1

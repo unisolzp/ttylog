@@ -1,0 +1,14 @@
+#!/bin/bash
+
+CHECK=$(env | grep "PAM_TYPE" | cut -d "=" -f2)
+
+if [ "$CHECK" == "close_session" ]
+then
+   XDG=$(env | grep "XDG_SESSION_ID" | cut -d "=" -f2)
+    if ls -1 /mnt/sessions/HOSTNAME/xdg/ | grep -q "^$XDG$"
+    then
+        IP=$(env | grep "PAM_RHOST" | cut -d "=" -f2)
+        SESSION_ID=$(cat /mnt/sessions/HOSTNAME/xdg/$XDG)
+        (curl -X POST -H 'Content-type: application/json' --data '{"text":"```HOSTNAME:\n'$IP' user has left the server.\nRecord session: record-session '$SESSION_ID'```"}' https://hooks.slack.com/services/KEY1/KEY2/KEY3 >&2) >/dev/null 2>&1
+    fi
+fi
