@@ -29,6 +29,6 @@ if [ -z "$OLDPWD" ]
 then
     OLDPWD=$(echo $PWD)
 fi
-export PROMPT_COMMAND='echo $(echo $CLIENT_ID) $(echo $OLDPWD) $(echo $PWD) $(echo $DATETIME) $(history 1) >> /mnt/sessions/HOSTNAME.history'
+export PROMPT_COMMAND='echo $(echo $CLIENT_ID) $(echo $OLDPWD) $(echo $PWD) $(echo $DATETIME) $(history 1) >> /mnt/tty/history'
 
-[[ -v IN_SCRIPT ]] || { export IN_SCRIPT=1 ; (curl -X POST -H 'Content-type: application/json' --data '{"text":"```HOSTNAME:\n'$IP' user has joined the server.\nView session: view-session '$SESSION_ID'```"}' https://hooks.slack.com/services/KEY1/KEY2/KEY3 >&2) >/dev/null 2>&1; echo $SESSION_ID >> /mnt/sessions/HOSTNAME/xdg/$XDG ; echo $TTY_ID >> /mnt/sessions/HOSTNAME/sessions/$SESSION_ID ; ttyrec -f /mnt/sessions/HOSTNAME/records/$SESSION_ID ; exit $?; }
+[[ -v IN_SCRIPT ]] || { export IN_SCRIPT=1 ; (curl -X POST -H 'Content-type: application/json' --data '{"text":"```HOSTNAME:\n'$IP' user has joined the server.\nView session: view-session '$SESSION_ID'```"}' https://hooks.slack.com/services/KEY1/KEY2/KEY3 >&2) >/dev/null 2>&1; echo $SESSION_ID >> /mnt/tty/xdg/$XDG ; echo $TTY_ID >> /mnt/tty/sessions/$SESSION_ID ; ttyrec -f /mnt/tty/records/$SESSION_ID ; exit $?; }
